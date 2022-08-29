@@ -1,0 +1,16 @@
+.title {
+  text-align: center;
+  line-height: 24px;
+}
+
+.nav {
+  position: relative;
+}
+
+.back {
+  position: absolute;
+  top: 0;
+  left: 24px;
+  line-height: 24px;
+  cursor: pointer;
+}
