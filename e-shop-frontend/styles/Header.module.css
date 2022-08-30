@@ -14,3 +14,13 @@
   line-height: 24px;
   cursor: pointer;
 }
+
+.auth {
+  position: absolute;
+  top: 0;
+  right: 24px;
+}
+
+.auth img {
+  max-width: 25px;
+}
