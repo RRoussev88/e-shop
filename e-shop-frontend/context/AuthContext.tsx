@@ -6,30 +6,32 @@ import {
   useState,
 } from 'react'
 import { useRouter } from 'next/router'
-import { Magic } from 'magic-sdk'
-import { MAGIC_PUBLIC_KEY } from '../utils/urls'
+import { API_URL } from '../utils/urls'
 
 type AuthContextValue = {
   user: { email: string } | null
-  loginUser: (email: string) => Promise<void>
+  loginUser: (email: string, password: string) => Promise<void>
   logoutUser: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue>({
   user: null,
-  loginUser: async (email: string) => {},
+  loginUser: async (email: string, password: string) => {},
   logoutUser: async () => {},
 })
-
-let magic: Magic
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<{ email: string } | null>(null)
   const router = useRouter()
 
-  const loginUser = async (email: string) => {
+  const loginUser = async (email: string, password: string) => {
     try {
-      await magic.auth.loginWithMagicLink({ email })
+      const productResponse = await fetch(`${API_URL}/api/auth/local`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ identifier: email, password }),
+      })
+      console.log('login response: ', productResponse)
       setUser({ email })
       router.push('/')
     } catch (error) {
@@ -38,25 +40,25 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   }
 
   const logoutUser = async () => {
-    try {
-      await magic.user.logout()
-      setUser(null)
-      router.push('/')
-    } catch (error) {}
+    // try {
+    //   await magic.user.logout()
+    //   setUser(null)
+    //   router.push('/')
+    // } catch (error) {}
   }
 
   const checkUserLoggedIn = async () => {
-    try {
-      const isLoggedIn = await magic.user.isLoggedIn()
-      if (isLoggedIn) {
-        const { email } = await magic.user.getMetadata()
-        email && setUser({ email })
-      }
-    } catch {}
+    // try {
+    //   const isLoggedIn = await magic.user.isLoggedIn()
+    //   if (isLoggedIn) {
+    //     const { email } = await magic.user.getMetadata()
+    //     email && setUser({ email })
+    //   }
+    // } catch {}
   }
 
   useEffect(() => {
-    magic = new Magic(MAGIC_PUBLIC_KEY)
+    // magic = new Magic(MAGIC_PUBLIC_KEY)
     checkUserLoggedIn()
   }, [])
 

@@ -39,6 +39,12 @@
     "slug": {
       "type": "uid",
       "targetField": "name"
+    },
+    "orders": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::order.order",
+      "mappedBy": "product"
     }
   }
 }

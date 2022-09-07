@@ -1,3 +1,5 @@
-export default () => (
-  <footer>Linda Ruseva eShop - &copy;&nbsp;{new Date().getFullYear()}</footer>
+const Footer = () => (
+  <footer>Linda Kunz eShop - &copy;&nbsp;{new Date().getFullYear()}</footer>
 )
+
+export default Footer

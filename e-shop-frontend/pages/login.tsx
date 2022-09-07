@@ -6,13 +6,14 @@ import styles from '../styles/Login.module.css'
 
 const Login: NextPage = () => {
   const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
   const { loginUser } = useContext(AuthContext)
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault()
-    loginUser(email)
+    loginUser(email, password)
   }
 
   return (
@@ -29,6 +30,13 @@ const Login: NextPage = () => {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder="Email Address"
+        />
+        <input
+          className={styles.input}
+          type="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          placeholder="Password"
         />
         <button type="submit" className={styles.button}>
           Login

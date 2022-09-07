@@ -13,7 +13,7 @@ const Home: NextPage<HomeProps> = ({ products }) => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Linda Ruseva eShop</title>
+        <title>Linda Kunz eShop</title>
         <meta name="description" content="Creations of Art" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
