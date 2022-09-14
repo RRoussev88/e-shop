@@ -66,3 +66,24 @@ type Format = {
   width: number
   height: number
 }
+
+export type LoginPayload = {
+  identifier: string
+  password: string
+}
+
+export type User = {
+  id: number
+  blocked: boolean
+  confirmed: boolean
+  createdAt: string
+  email: string
+  provider: string
+  updatedAt: string
+  username: string
+}
+
+export type LoginResponse = {
+  jwt: string
+  user: User
+}

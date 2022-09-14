@@ -1,3 +1,4 @@
+import { deleteCookie, getCookie, hasCookie, setCookie } from 'cookies-next'
 import {
   createContext,
   FC,
@@ -6,10 +7,12 @@ import {
   useState,
 } from 'react'
 import { useRouter } from 'next/router'
-import { API_URL } from '../utils/urls'
+import { isUser } from '../utils/format'
+import { API_URL, cookieNames } from '../utils/urls'
+import { LoginResponse, LoginPayload, User } from '../pages/api/types'
 
 type AuthContextValue = {
-  user: { email: string } | null
+  user: User | null
   loginUser: (email: string, password: string) => Promise<void>
   logoutUser: () => Promise<void>
 }
@@ -20,19 +23,29 @@ const AuthContext = createContext<AuthContextValue>({
   logoutUser: async () => {},
 })
 
+const cookieOptions = {
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: 'lax',
+  path: '/',
+  maxAge: 60 * 60 * 24 * 14, // 14 days
+} as const
+
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [user, setUser] = useState<{ email: string } | null>(null)
+  const [user, setUser] = useState<User | null>(null)
   const router = useRouter()
 
   const loginUser = async (email: string, password: string) => {
     try {
-      const productResponse = await fetch(`${API_URL}/api/auth/local`, {
+      const authentication = await fetch(`${API_URL}/api/auth/local`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ identifier: email, password }),
       })
-      console.log('login response: ', productResponse)
-      setUser({ email })
+
+      const auth: LoginResponse = await authentication.json()
+      setCookie(cookieNames.userData, auth.user, cookieOptions)
+      setUser(auth.user)
       router.push('/')
     } catch (error) {
       setUser(null)
@@ -40,27 +53,31 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   }
 
   const logoutUser = async () => {
-    // try {
-    //   await magic.user.logout()
-    //   setUser(null)
-    //   router.push('/')
-    // } catch (error) {}
-  }
-
-  const checkUserLoggedIn = async () => {
-    // try {
-    //   const isLoggedIn = await magic.user.isLoggedIn()
-    //   if (isLoggedIn) {
-    //     const { email } = await magic.user.getMetadata()
-    //     email && setUser({ email })
-    //   }
-    // } catch {}
+    try {
+      deleteCookie(cookieNames.userData)
+      setUser(null)
+      router.push('/')
+    } catch (error) {}
   }
 
   useEffect(() => {
-    // magic = new Magic(MAGIC_PUBLIC_KEY)
+    const checkUserLoggedIn = async () => {
+      if (!user && hasCookie(cookieNames.userData)) {
+        const userCookie = getCookie(cookieNames.userData)
+        if (typeof userCookie === 'string') {
+          try {
+            const savedUser = JSON.parse(userCookie as string)
+            if (isUser(savedUser)) {
+              setUser(savedUser)
+            }
+          } catch (err) {
+            console.error('Error parsing: ', err)
+          }
+        }
+      }
+    }
     checkUserLoggedIn()
-  }, [])
+  }, [user])
 
   return (
     <AuthContext.Provider value={{ user, loginUser, logoutUser }}>
