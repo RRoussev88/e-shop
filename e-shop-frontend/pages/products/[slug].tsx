@@ -1,5 +1,7 @@
 import type { GetStaticProps, NextPage } from 'next'
 import Head from 'next/head'
+import Image from 'next/image'
+
 import { toDecimals } from '../../utils/format'
 import { fromImgToUrl, API_URL } from '../../utils/urls'
 import { ApiResponse, Product } from '../api/types'
@@ -21,7 +23,12 @@ const ProductDetails: NextPage<ProductDetailsProps> = ({ product }) => {
         )}
       </Head>
       <h3>{product.attributes.name}</h3>
-      <img src={fromImgToUrl(product.attributes.image)} />
+      <Image
+        src={fromImgToUrl(product.attributes.image)}
+        alt={product.attributes.meta_title}
+        width={250}
+        height={250}
+      />
       <h3>{product.attributes.name}</h3>
       <p>&#8364;&nbsp;{toDecimals(product.attributes.price)}</p>
       <p>{product.attributes.content}</p>

@@ -27,7 +27,7 @@ const cookieOptions = {
   secure: process.env.NODE_ENV === 'production',
   sameSite: 'lax',
   path: '/',
-  maxAge: 60 * 60 * 24 * 14, // 14 days
+  maxAge: 60 * 60 * 24 * 30, // 30 days
 } as const
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -71,7 +71,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
               setUser(savedUser)
             }
           } catch (err) {
-            console.error('Error parsing: ', err)
+            console.error('Error parsing user from cookie: ', err)
           }
         }
       }

@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import Image from 'next/image'
 import Link from 'next/link'
 
 import styles from '../styles/Home.module.css'
@@ -24,7 +25,12 @@ const Home: NextPage<HomeProps> = ({ products }) => {
             <a>
               <div className={styles.product__Row}>
                 <div className={styles.product__ColImg}>
-                  <img src={fromImgToUrl(product.attributes.image)} />
+                  <Image
+                    src={fromImgToUrl(product.attributes.image)}
+                    alt={product.attributes.meta_title}
+                    width={50}
+                    height={50}
+                  />
                 </div>
                 <div className={styles.product__Col}>
                   {product.attributes.name} &#8364;&nbsp;
