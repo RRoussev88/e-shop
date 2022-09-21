@@ -8,33 +8,31 @@ import { ApiResponse, Product } from '../api/types'
 
 type ProductDetailsProps = { product: Product }
 
-const ProductDetails: NextPage<ProductDetailsProps> = ({ product }) => {
-  return (
-    <div>
-      <Head>
-        {product.attributes.meta_title && (
-          <title>{product.attributes.meta_title}</title>
-        )}
-        {product.attributes.meta_description && (
-          <meta
-            name="description"
-            content={product.attributes.meta_description}
-          />
-        )}
-      </Head>
-      <h3>{product.attributes.name}</h3>
-      <Image
-        src={fromImgToUrl(product.attributes.image)}
-        alt={product.attributes.meta_title}
-        width={250}
-        height={250}
-      />
-      <h3>{product.attributes.name}</h3>
-      <p>&#8364;&nbsp;{toDecimals(product.attributes.price)}</p>
-      <p>{product.attributes.content}</p>
-    </div>
-  )
-}
+const ProductDetails: NextPage<ProductDetailsProps> = ({ product }) => (
+  <div>
+    <Head>
+      {product.attributes.meta_title && (
+        <title>{product.attributes.meta_title}</title>
+      )}
+      {product.attributes.meta_description && (
+        <meta
+          name="description"
+          content={product.attributes.meta_description}
+        />
+      )}
+    </Head>
+    <h3>{product.attributes.name}</h3>
+    <Image
+      src={fromImgToUrl(product.attributes.image)}
+      alt={product.attributes.meta_title}
+      width={250}
+      height={250}
+    />
+    <h3>{product.attributes.name}</h3>
+    <p>&#8364;&nbsp;{toDecimals(product.attributes.price)}</p>
+    <p>{product.attributes.content}</p>
+  </div>
+)
 
 export default ProductDetails
 

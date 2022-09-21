@@ -9,7 +9,7 @@ import {
 import { useRouter } from 'next/router'
 import { isUser } from '../utils/format'
 import { API_URL, cookieNames } from '../utils/urls'
-import { LoginResponse, LoginPayload, User } from '../pages/api/types'
+import { AuthResponse, User } from '../pages/api/types'
 
 type AuthContextValue = {
   user: User | null
@@ -43,7 +43,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
         body: JSON.stringify({ identifier: email, password }),
       })
 
-      const auth: LoginResponse = await authentication.json()
+      const auth: AuthResponse = await authentication.json()
       setCookie(cookieNames.userData, auth.user, cookieOptions)
       setUser(auth.user)
       router.push('/')
@@ -54,9 +54,13 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const logoutUser = async () => {
     try {
+      await fetch(`${API_URL}/api/auth/logout`, {
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+      })
       deleteCookie(cookieNames.userData)
       setUser(null)
-      router.push('/')
+      router.push('/login')
     } catch (error) {}
   }
 

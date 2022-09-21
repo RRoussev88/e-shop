@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useContext } from 'react'
 import AuthContext from '../context/AuthContext'
+import styles from '../styles/Account.module.css'
 
 const Account: NextPage = () => {
   const { user, logoutUser } = useContext(AuthContext)
@@ -19,6 +20,9 @@ const Account: NextPage = () => {
         </Head>
         <h2>Account Page</h2>
         <p>Logged in as: {user.email}</p>
+        <Link href="/orders">
+          <a className={styles.link__Orders}>User&apos;s orders</a>
+        </Link>
         <a href="#" onClick={logoutUser}>
           Logout
         </a>

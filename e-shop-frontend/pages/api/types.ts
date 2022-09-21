@@ -67,6 +67,12 @@ type Format = {
   height: number
 }
 
+export type RegisterPayload = {
+  email: string
+  username: string
+  password: string
+}
+
 export type LoginPayload = {
   identifier: string
   password: string
@@ -83,7 +89,26 @@ export type User = {
   username: string
 }
 
-export type LoginResponse = {
+enum OrderStatus {
+  PAID = 'paid',
+  UNPAID = 'unpaid',
+}
+
+export type Order = {
+  id: number
+  attributes: {
+    status: OrderStatus
+    total: number
+    checkout_session: string
+    createdAt: string
+    updatedAt: string
+    publishedAt: string
+    product: { data: Product }
+    user: User
+  }
+}
+
+export type AuthResponse = {
   jwt: string
   user: User
 }
