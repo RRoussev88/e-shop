@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { toDecimals } from '../../utils/format'
 import { fromImgToUrl, API_URL } from '../../utils/urls'
 import { ApiResponse, Product } from '../api/types'
+import BuyButton from '../../components/BuyButton'
 
 type ProductDetailsProps = { product: Product }
 
@@ -29,7 +30,10 @@ const ProductDetails: NextPage<ProductDetailsProps> = ({ product }) => (
       height={250}
     />
     <h3>{product.attributes.name}</h3>
-    <p>&#8364;&nbsp;{toDecimals(product.attributes.price)}</p>
+    <p>
+      &#8364;&nbsp;{toDecimals(product.attributes.price)}&nbsp;
+      <BuyButton product={product} />
+    </p>
     <p>{product.attributes.content}</p>
   </div>
 )

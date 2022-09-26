@@ -1,11 +1,10 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useContext, useEffect, useState } from 'react'
 
 import { toDecimals } from '../../utils/format'
-import { fromImgToUrl, API_URL } from '../../utils/urls'
+import { API_URL } from '../../utils/urls'
 import { ApiResponse, Order, User } from '../api/types'
 import AuthContext from '../../context/AuthContext'
 

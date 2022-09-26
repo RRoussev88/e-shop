@@ -3,9 +3,13 @@ import { Image } from '../pages/api/types'
 export const API_URL =
   process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337'
 
+export const STRIPE_PK =
+  process.env.NEXT_PUBLIC_STRPIE_PK ||
+  'pk_test_51LkaR2AyYVbxEXUDafkM3yVN97OfalnouD4pkSLdOJ6PD8v8n38hNB8bk5xEYQ02Wjei1BU2Z5XSFoGjg2oxtPH500zAXP5U3H'
+
 export const cookieNames = {
   userData: 'eShopUserData',
-  userSession: 'eShopUserSession'
+  userSession: 'eShopUserSession',
 }
 
 export const fromImgToUrl = (image?: Image) => {

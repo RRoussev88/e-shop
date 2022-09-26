@@ -1,6 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
+    400: {
+        data: null,
+        error: {
+            status: 400,
+            name: 'BadRequestError',
+            message: 'Bad Request',
+            details: {},
+        },
+    },
     401: {
         data: null,
         error: {

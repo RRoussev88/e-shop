@@ -1,4 +1,13 @@
 export default {
+  400: {
+    data: null,
+    error: {
+      status: 400,
+      name: 'BadRequestError',
+      message: 'Bad Request',
+      details: {},
+    },
+  },
   401: {
     data: null,
     error: {
