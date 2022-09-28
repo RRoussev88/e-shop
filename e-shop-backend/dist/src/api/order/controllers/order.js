@@ -8,7 +8,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const strapi_1 = require("@strapi/strapi");
 const stripe_1 = __importDefault(require("stripe"));
-const utils_1 = require("@strapi/utils");
 const errors_1 = __importDefault(require("../../../utils/errors"));
 const stripe = new stripe_1.default(process.env.STRIPE_SK, {
     apiVersion: '2022-08-01',
@@ -119,11 +118,8 @@ exports.default = strapi_1.factories.createCoreController('api::order.order', ({
                 const updateOrder = await strapi
                     .service('api::order.order')
                     .update(initialOrder.results[0].id, { data: { status: 'paid' } });
-                const { auth } = ctx.state;
-                const response = await utils_1.sanitize.contentAPI.output(updateOrder, strapi.getModel('api::order.order'), 
-                // Not needed for unauthenticated requests
-                { auth });
-                return response;
+                const sanitizedEntity = await this.sanitizeOutput(updateOrder, ctx);
+                return this.transformResponse(sanitizedEntity);
             }
         }
         else {

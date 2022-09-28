@@ -13,12 +13,14 @@ import { AuthResponse, User } from '../pages/api/types'
 
 type AuthContextValue = {
   user: User | null
+  signup: (email: string, username: string, password: string) => Promise<void>
   loginUser: (email: string, password: string) => Promise<void>
   logoutUser: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue>({
   user: null,
+  signup: async (email: string, username: string, password: string) => {},
   loginUser: async (email: string, password: string) => {},
   logoutUser: async () => {},
 })
@@ -46,6 +48,24 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
       const auth: AuthResponse = await authentication.json()
       setCookie(cookieNames.userData, auth.user, cookieOptions)
       setUser(auth.user)
+      router.push('/')
+    } catch (error) {
+      setUser(null)
+    }
+  }
+
+  const signup = async (email: string, username: string, password: string) => {
+    try {
+      const authentication = await fetch(`${API_URL}/api/auth/local/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ username, email, password }),
+      })
+
+      const signup: AuthResponse = await authentication.json()
+      setCookie(cookieNames.userData, signup.user, cookieOptions)
+      setUser(signup.user)
       router.push('/')
     } catch (error) {
       setUser(null)
@@ -84,7 +104,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   }, [user])
 
   return (
-    <AuthContext.Provider value={{ user, loginUser, logoutUser }}>
+    <AuthContext.Provider value={{ user, signup, loginUser, logoutUser }}>
       {children}
     </AuthContext.Provider>
   )

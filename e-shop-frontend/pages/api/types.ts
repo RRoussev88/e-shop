@@ -7,7 +7,7 @@ export type Meta = {
   }
 }
 
-export type ApiResponse<T = object> = { data: T[]; meta: Meta }
+export type ApiResponse<T = object> = { data: T; meta: Meta }
 
 export type Product = {
   id: number
@@ -109,6 +109,6 @@ export type Order = {
 }
 
 export type AuthResponse = {
-  jwt: string
+  jwt?: string
   user: User
 }

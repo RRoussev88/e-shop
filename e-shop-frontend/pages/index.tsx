@@ -49,7 +49,7 @@ export const getStaticProps = async () => {
   const productResponse = await fetch(`${API_URL}/api/products/?populate=*`, {
     credentials: 'include',
   })
-  const products: ApiResponse<Product> = await productResponse.json()
+  const products: ApiResponse<Product[]> = await productResponse.json()
 
   return { props: { products: products.data } }
 }

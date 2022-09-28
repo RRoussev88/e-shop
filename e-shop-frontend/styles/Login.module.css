@@ -16,3 +16,13 @@
   padding: 12px;
   margin-bottom: 24px;
 }
+
+.warning {
+  margin: 0.25rem auto;
+  padding: 0.5rem;
+  border-radius: 3px;
+  border: 1px solid red;
+  background-color: #eb9292;
+  color: white;
+  text-align: center;
+}

@@ -8,6 +8,8 @@ import styles from '../styles/Header.module.css'
 const Header: FC = () => {
   const router = useRouter()
   const isHome = router.pathname === '/'
+  const isLogin = router.pathname === '/login'
+  const isSignup = router.pathname === '/signup'
 
   const goBack = (event: any) => {
     event.preventDefault()
@@ -45,9 +47,18 @@ const Header: FC = () => {
             </a>
           </Link>
         ) : (
-          <Link href="/login">
-            <a>Login</a>
-          </Link>
+          <>
+            {!isLogin && (
+              <Link href="/login">
+                <a>Login</a>
+              </Link>
+            )}
+            {!isSignup && (
+              <Link href="/signup">
+                <a>Signup</a>
+              </Link>
+            )}
+          </>
         )}
       </div>
     </header>

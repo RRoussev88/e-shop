@@ -141,14 +141,8 @@ export default factories.createCoreController(
             .service('api::order.order')
             .update(initialOrder.results[0].id, { data: { status: 'paid' } })
 
-          const { auth } = ctx.state
-          const response = await sanitize.contentAPI.output(
-            updateOrder,
-            strapi.getModel('api::order.order'),
-            // Not needed for unauthenticated requests
-            { auth }
-          )
-          return response
+          const sanitizedEntity = await this.sanitizeOutput(updateOrder, ctx)
+          return this.transformResponse(sanitizedEntity)
         }
       } else {
         ctx.throw(400, "The payment wasn't successfull. Please, call support")

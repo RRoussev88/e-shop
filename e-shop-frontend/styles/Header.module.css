@@ -24,3 +24,7 @@
 .auth img {
   max-width: 25px;
 }
+
+.auth > a + a {
+  margin-left: 1rem;
+}

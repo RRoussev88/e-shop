@@ -21,8 +21,8 @@ const useOrders = (user: User | null) => {
             `${API_URL}/api/orders/?populate=*`,
             { credentials: 'include' }
           )
-          const orders: ApiResponse<Order> = await ordersResponse.json()
-          setOrders(orders.data)
+          const orders: ApiResponse<Order[] | null> = await ordersResponse.json()
+          setOrders(orders.data ?? [])
         } catch {
           setOrders([])
         } finally {

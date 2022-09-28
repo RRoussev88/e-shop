@@ -47,14 +47,14 @@ export const getStaticProps: GetStaticProps<
   const productResponse = await fetch(
     `${API_URL}/api/products/?populate=*&filters[slug][$eq]=${params?.slug}`
   )
-  const product = await productResponse.json()
+  const product: ApiResponse<[Product]> = await productResponse.json()
 
   return { props: { product: product.data[0] } }
 }
 
 export const getStaticPaths = async () => {
   const productsResponse = await fetch(`${API_URL}/api/products/`)
-  const products: ApiResponse<Product> = await productsResponse.json()
+  const products: ApiResponse<Product[]> = await productsResponse.json()
 
   return {
     paths: products.data.map((product: Product) => ({

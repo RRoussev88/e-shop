@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import { Order } from './api/types'
+import { ApiResponse, Order } from './api/types'
 import { API_URL } from '../utils/urls'
 
 const useOrder = (sessionId: string) => {
@@ -20,8 +20,8 @@ const useOrder = (sessionId: string) => {
             body: JSON.stringify({ checkout_session: sessionId }),
           })
 
-          const order: Order = await orderResponse.json()
-          setOrder(order)
+          const order: ApiResponse<Order> = await orderResponse.json()
+          setOrder(order.data)
         } catch {
           setOrder(null)
         } finally {
