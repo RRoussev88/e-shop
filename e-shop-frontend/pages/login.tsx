@@ -1,8 +1,9 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
+import Link from 'next/link'
 import { FormEvent, FormEventHandler, useContext, useState } from 'react'
 import AuthContext from '../context/AuthContext'
-import styles from '../styles/Login.module.css'
+import styles from '../styles/Auth.module.css'
 
 const Login: NextPage = () => {
   const [email, setEmail] = useState<string>('')
@@ -38,6 +39,9 @@ const Login: NextPage = () => {
           onChange={(event) => setPassword(event.target.value)}
           placeholder="Password"
         />
+        <Link href="/forgot-password">
+          <a className={styles.link__Password}>Forgot password</a>
+        </Link>
         <button type="submit" className={styles.button}>
           Login
         </button>

@@ -17,12 +17,32 @@
   margin-bottom: 24px;
 }
 
-.warning {
+.link__Password {
+  display: block;
+  margin: 20px 0;
+  text-align: center;
+  color: skyblue;
+}
+
+.link__Password:hover, .link__Password:visited, .link__Password:active {
+  text-decoration: underline;
+  color: hotpink;
+}
+
+.message {
   margin: 0.25rem auto;
   padding: 0.5rem;
   border-radius: 3px;
-  border: 1px solid red;
-  background-color: #eb9292;
   color: white;
   text-align: center;
+}
+
+.warning {
+  border: 1px solid red;
+  background-color: #eb9292;
+}
+
+.success {
+  border: 1px solid darkgreen;
+  background-color: #4cb73a;
 }

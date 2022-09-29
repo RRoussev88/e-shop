@@ -1,24 +1,26 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { FormEvent, FormEventHandler, useContext, useState } from 'react'
+import { useRouter } from 'next/router'
+import { FormEvent, FormEventHandler, useContext,useState } from 'react'
 import AuthContext from '../context/AuthContext'
 import styles from '../styles/Auth.module.css'
 
-const Signup: NextPage = () => {
-  const [email, setEmail] = useState<string>('')
-  const [username, setUsername] = useState<string>('')
+const ResetPassword: NextPage = () => {
   const [password, setPassword] = useState<string>('')
-  const [confirmPass, setConfirmPass] = useState<string>('')
+  const [passwordConfirmation, setConfirmPass] = useState<string>('')
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
-  const { signup } = useContext(AuthContext)
+  const { resetPassword } = useContext(AuthContext)
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (
+  const router = useRouter()
+  const { code } = router.query
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault()
-    if (email && username && password && password === confirmPass) {
+    if (code && password && password === passwordConfirmation) {
       setIsSubmitted(false)
-      signup(email, username, password)
+      resetPassword(code.toString(), password, passwordConfirmation)
     } else {
       setIsSubmitted(true)
     }
@@ -27,26 +29,12 @@ const Signup: NextPage = () => {
   return (
     <div>
       <Head>
-        <title>Signup</title>
-        <meta name="description" content="Signup here to create an account" />
+        <title>Reset Password</title>
+        <meta name="description" content="Enter your new password" />
       </Head>
-      <h2>Signup</h2>
+      <h2>Reset Password</h2>
+      <p>Enter your new password</p>
       <form onSubmit={handleSubmit}>
-        <input
-          autoFocus={true}
-          className={styles.input}
-          type="text"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
-          placeholder="User Name"
-        />
-        <input
-          className={styles.input}
-          type="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          placeholder="Email Address"
-        />
         <input
           className={styles.input}
           type="password"
@@ -57,7 +45,7 @@ const Signup: NextPage = () => {
         <input
           className={styles.input}
           type="password"
-          value={confirmPass}
+          value={passwordConfirmation}
           onChange={(event) => setConfirmPass(event.target.value)}
           placeholder="Confirm Password"
         />
@@ -67,11 +55,11 @@ const Signup: NextPage = () => {
           </p>
         )}
         <button type="submit" className={styles.button}>
-          Signup
+          Reset Password
         </button>
       </form>
     </div>
   )
 }
 
-export default Signup
+export default ResetPassword

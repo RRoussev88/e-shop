@@ -25,7 +25,11 @@ exports.default = () => {
                 : process.env.PRODUCTION_URL,
         };
         // For login and register paths
-        if (['/api/auth/local', '/api/auth/local/register'].includes(ctx.request.path)) {
+        if ([
+            '/api/auth/local',
+            '/api/auth/local/register',
+            '/api/auth/reset-password',
+        ].includes(ctx.request.path)) {
             const { jwt, ...rest } = ctx.response.body;
             // Remove the issued JWT from the response body
             ctx.response.body = { ...rest };

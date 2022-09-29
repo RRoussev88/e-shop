@@ -15,6 +15,11 @@ type AuthContextValue = {
   user: User | null
   signup: (email: string, username: string, password: string) => Promise<void>
   loginUser: (email: string, password: string) => Promise<void>
+  resetPassword: (
+    ecode: string,
+    password: string,
+    passwordConfirmation: string
+  ) => Promise<void>
   logoutUser: () => Promise<void>
 }
 
@@ -22,6 +27,11 @@ const AuthContext = createContext<AuthContextValue>({
   user: null,
   signup: async (email: string, username: string, password: string) => {},
   loginUser: async (email: string, password: string) => {},
+  resetPassword: async (
+    code: string,
+    password: string,
+    passwordConfirmation: string
+  ) => {},
   logoutUser: async () => {},
 })
 
@@ -43,6 +53,28 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({ identifier: email, password }),
+      })
+
+      const auth: AuthResponse = await authentication.json()
+      setCookie(cookieNames.userData, auth.user, cookieOptions)
+      setUser(auth.user)
+      router.push('/')
+    } catch (error) {
+      setUser(null)
+    }
+  }
+
+  const resetPassword = async (
+    code: string,
+    password: string,
+    passwordConfirmation: string
+  ) => {
+    try {
+      const authentication = await fetch(`${API_URL}/api/auth/reset-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ password, passwordConfirmation, code }),
       })
 
       const auth: AuthResponse = await authentication.json()
@@ -104,7 +136,9 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   }, [user])
 
   return (
-    <AuthContext.Provider value={{ user, signup, loginUser, logoutUser }}>
+    <AuthContext.Provider
+      value={{ user, signup, loginUser, logoutUser, resetPassword }}
+    >
       {children}
     </AuthContext.Provider>
   )
