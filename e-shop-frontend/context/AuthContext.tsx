@@ -13,6 +13,7 @@ import { AuthResponse, User } from '../pages/api/types'
 
 type AuthContextValue = {
   user: User | null
+  editProfile: (user: User) => void
   signup: (email: string, username: string, password: string) => Promise<void>
   loginUser: (email: string, password: string) => Promise<void>
   resetPassword: (
@@ -25,6 +26,7 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue>({
   user: null,
+  editProfile: (user: User) => {},
   signup: async (email: string, username: string, password: string) => {},
   loginUser: async (email: string, password: string) => {},
   resetPassword: async (
@@ -46,22 +48,39 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null)
   const router = useRouter()
 
-  const loginUser = async (email: string, password: string) => {
+  const executeRequest = async (promise: Promise<Response>): Promise<void> => {
     try {
-      const authentication = await fetch(`${API_URL}/api/auth/local`, {
+      const authentication = await promise
+      const auth: AuthResponse | User = await authentication.json()
+      const newUser: User = isUser(auth) ? auth : auth.user
+      setCookie(cookieNames.userData, newUser, cookieOptions)
+      setUser(newUser)
+      router.push('/')
+    } catch {
+      setUser(null)
+    }
+  }
+
+  const editProfile = async (data: User) => {
+    executeRequest(
+      fetch(`${API_URL}/api/users/${user?.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(data),
+      })
+    )
+  }
+
+  const loginUser = async (email: string, password: string) => {
+    executeRequest(
+      fetch(`${API_URL}/api/auth/local`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({ identifier: email, password }),
       })
-
-      const auth: AuthResponse = await authentication.json()
-      setCookie(cookieNames.userData, auth.user, cookieOptions)
-      setUser(auth.user)
-      router.push('/')
-    } catch (error) {
-      setUser(null)
-    }
+    )
   }
 
   const resetPassword = async (
@@ -69,39 +88,25 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     password: string,
     passwordConfirmation: string
   ) => {
-    try {
-      const authentication = await fetch(`${API_URL}/api/auth/reset-password`, {
+    executeRequest(
+      fetch(`${API_URL}/api/auth/reset-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({ password, passwordConfirmation, code }),
       })
-
-      const auth: AuthResponse = await authentication.json()
-      setCookie(cookieNames.userData, auth.user, cookieOptions)
-      setUser(auth.user)
-      router.push('/')
-    } catch (error) {
-      setUser(null)
-    }
+    )
   }
 
   const signup = async (email: string, username: string, password: string) => {
-    try {
-      const authentication = await fetch(`${API_URL}/api/auth/local/register`, {
+    executeRequest(
+      fetch(`${API_URL}/api/auth/local/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({ username, email, password }),
       })
-
-      const signup: AuthResponse = await authentication.json()
-      setCookie(cookieNames.userData, signup.user, cookieOptions)
-      setUser(signup.user)
-      router.push('/')
-    } catch (error) {
-      setUser(null)
-    }
+    )
   }
 
   const logoutUser = async () => {
@@ -111,9 +116,11 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
         credentials: 'include',
       })
       deleteCookie(cookieNames.userData)
-      setUser(null)
       router.push('/login')
-    } catch (error) {}
+    } catch {
+    } finally {
+      setUser(null)
+    }
   }
 
   useEffect(() => {
@@ -137,7 +144,14 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, signup, loginUser, logoutUser, resetPassword }}
+      value={{
+        user,
+        editProfile,
+        signup,
+        loginUser,
+        logoutUser,
+        resetPassword,
+      }}
     >
       {children}
     </AuthContext.Provider>

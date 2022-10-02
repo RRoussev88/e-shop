@@ -1,7 +1,6 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
 import { FormEvent, FormEventHandler, useState } from 'react'
-import styles from '../styles/Auth.module.css'
 import { API_URL } from '../utils/urls'
 
 const ForgotPassword: NextPage = () => {
@@ -39,7 +38,7 @@ const ForgotPassword: NextPage = () => {
       <p>Send a reset link to your registered email</p>
       <form onSubmit={handleSubmit}>
         <input
-          className={styles.input}
+          className="input"
           type="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
@@ -47,15 +46,13 @@ const ForgotPassword: NextPage = () => {
         />
         {isSubmitted &&
           (!email ? (
-            <p className={`${styles.message} ${styles.warning}`}>
-              Please enter a valid email
-            </p>
+            <p className="message warning">Please enter a valid email</p>
           ) : (
-            <p className={`${styles.message} ${styles.success}`}>
+            <p className="message success">
               Please check your email for a reset link
             </p>
           ))}
-        <button type="submit" className={styles.button}>
+        <button type="submit" className="button">
           {isSubmitted ? 'Resend' : 'Send'} Link
         </button>
       </form>

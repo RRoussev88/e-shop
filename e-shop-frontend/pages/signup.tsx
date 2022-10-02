@@ -2,7 +2,6 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import { FormEvent, FormEventHandler, useContext, useState } from 'react'
 import AuthContext from '../context/AuthContext'
-import styles from '../styles/Auth.module.css'
 
 const Signup: NextPage = () => {
   const [email, setEmail] = useState<string>('')
@@ -33,40 +32,40 @@ const Signup: NextPage = () => {
       <h2>Signup</h2>
       <form onSubmit={handleSubmit}>
         <input
-          autoFocus={true}
-          className={styles.input}
+          autoFocus
+          className="input"
           type="text"
           value={username}
           onChange={(event) => setUsername(event.target.value)}
           placeholder="User Name"
         />
         <input
-          className={styles.input}
+          className="input"
           type="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder="Email Address"
         />
         <input
-          className={styles.input}
+          className="input"
           type="password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
           placeholder="Password"
         />
         <input
-          className={styles.input}
+          className="input"
           type="password"
           value={confirmPass}
           onChange={(event) => setConfirmPass(event.target.value)}
           placeholder="Confirm Password"
         />
         {isSubmitted && (
-          <p className={styles.warning}>
+          <p className="message warning">
             Password and Confirm password doesn&apos;t match
           </p>
         )}
-        <button type="submit" className={styles.button}>
+        <button type="submit" className="button">
           Signup
         </button>
       </form>

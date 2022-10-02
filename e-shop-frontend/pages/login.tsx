@@ -3,7 +3,6 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { FormEvent, FormEventHandler, useContext, useState } from 'react'
 import AuthContext from '../context/AuthContext'
-import styles from '../styles/Auth.module.css'
 
 const Login: NextPage = () => {
   const [email, setEmail] = useState<string>('')
@@ -26,23 +25,24 @@ const Login: NextPage = () => {
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <input
-          className={styles.input}
+          autoFocus
+          className="input"
           type="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder="Email Address"
         />
         <input
-          className={styles.input}
+          className="input"
           type="password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
           placeholder="Password"
         />
         <Link href="/forgot-password">
-          <a className={styles.link__Password}>Forgot password</a>
+          <a className="link">Forgot password</a>
         </Link>
-        <button type="submit" className={styles.button}>
+        <button type="submit" className="button">
           Login
         </button>
       </form>
