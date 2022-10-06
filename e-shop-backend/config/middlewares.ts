@@ -1,4 +1,4 @@
-export default [
+export default ({ env }) => [
   'strapi::errors',
   {
     name: 'strapi::security',
@@ -11,9 +11,18 @@ export default [
             "'self'",
             'data:',
             'blob:',
-            'https://e-shop-images.s3.eu-central-1.amazonaws.com/*',
+            `https://${env('AWS_BUCKET_NAME')}.s3.${env(
+              'AWS_REGION'
+            )}.amazonaws.com`,
           ],
-          'media-src': ["'self'", 'data:', 'blob:'],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            `https://${env('AWS_BUCKET_NAME')}.s3.${env(
+              'AWS_REGION'
+            )}.amazonaws.com`,
+          ],
           upgradeInsecureRequests: null,
         },
       },
