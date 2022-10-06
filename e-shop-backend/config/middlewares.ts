@@ -19,7 +19,7 @@ export default ({ env }) => [
             "'self'",
             'data:',
             'blob:',
-            `${env('AWS_BUCKET_NAME')}.s3.${env(
+            `http://${env('AWS_BUCKET_NAME')}.s3.${env(
               'AWS_REGION'
             )}.amazonaws.com`,
           ],
