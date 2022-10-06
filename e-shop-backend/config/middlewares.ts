@@ -11,7 +11,7 @@ export default [
             "'self'",
             'data:',
             'blob:',
-            'https://e-shop-images.s3.eu-central-1.amazonaws.com/',
+            'https://e-shop-images.s3.eu-central-1.amazonaws.com/*',
           ],
           'media-src': ["'self'", 'data:', 'blob:'],
           upgradeInsecureRequests: null,
