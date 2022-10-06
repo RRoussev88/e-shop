@@ -4,14 +4,26 @@ export default ({ env }) => [
     name: 'strapi::security',
     config: {
       contentSecurityPolicy: {
+        useDefaults: true,
         directives: {
-          'script-src': ["'self'", "'unsafe-inline'", 'cdn.jsdelivr.net'],
+          'connect-src': ["'self'", 'https:'],
           'img-src': [
             "'self'",
             'data:',
             'blob:',
-            `${env('AWS_BUCKET_NAME')}.s3.${env('AWS_REGION')}.amazonaws.com`,
+            `${env('AWS_BUCKET_NAME')}.s3.${env(
+              'AWS_REGION'
+            )}.amazonaws.com`,
           ],
+          'media-src': [
+            "'self'",
+            'data:',
+            'blob:',
+            `${env('AWS_BUCKET_NAME')}.s3.${env(
+              'AWS_REGION'
+            )}.amazonaws.com`,
+          ],
+          upgradeInsecureRequests: null,
         },
       },
     },
