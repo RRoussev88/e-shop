@@ -11,6 +11,7 @@ export default ({ env }) => [
             "'self'",
             'data:',
             'blob:',
+            'dl.airtable.com',
             `https://${env('AWS_BUCKET_NAME')}.s3.${env(
               'AWS_REGION'
             )}.amazonaws.com`,
@@ -19,6 +20,7 @@ export default ({ env }) => [
             "'self'",
             'data:',
             'blob:',
+            'dl.airtable.com',
             `https://${env('AWS_BUCKET_NAME')}.s3.${env(
               'AWS_REGION'
             )}.amazonaws.com`,
