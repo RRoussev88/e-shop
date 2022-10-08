@@ -1,5 +1,11 @@
 export default ({ env }) => {
-  console.log('ENV: ', env)
+  const imgAndMediaDirectives = [
+    "'self'",
+    'data:',
+    'blob:',
+    `http://${env('AWS_BUCKET_NAME')}.s3.${env('AWS_REGION')}.amazonaws.com`,
+  ]
+
   return [
     'strapi::errors',
     {
@@ -9,20 +15,8 @@ export default ({ env }) => {
           useDefaults: true,
           directives: {
             'connect-src': ["'self'", 'https:'],
-            'img-src': [
-              "'self'",
-              'data:',
-              'blob:',
-              'https://e-shop-images.s3.eu-central-1.amazonaws.com/*',
-            ],
-            'media-src': [
-              "'self'",
-              'data:',
-              'blob:',
-              `http://${env('AWS_BUCKET_NAME')}.s3.${env(
-                'AWS_REGION'
-              )}.amazonaws.com`,
-            ],
+            'img-src': imgAndMediaDirectives,
+            'media-src': imgAndMediaDirectives,
             upgradeInsecureRequests: null,
           },
         },

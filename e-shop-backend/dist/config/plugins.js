@@ -7,10 +7,7 @@ exports.default = ({ env }) => ({
             providerOptions: {
                 host: env('SMTP_HOST', 'smtp.gmail.com'),
                 port: env('SMTP_PORT', 465),
-                auth: {
-                    user: env('GMAIL_USER'),
-                    pass: env('GMAIL_PASSWORD'),
-                },
+                auth: { user: env('GMAIL_USER'), pass: env('GMAIL_PASSWORD') },
             },
             settings: {
                 defaultFrom: 'eshop.kunz@gmail.com',
@@ -27,10 +24,7 @@ exports.default = ({ env }) => ({
                 region: env('AWS_REGION'),
                 params: { Bucket: env('AWS_BUCKET_NAME') },
             },
-            actionOptions: {
-                upload: { ACL: null },
-                uploadStream: { ACL: null },
-            },
+            actionOptions: { upload: { ACL: null }, uploadStream: { ACL: null } },
         },
     },
 });
