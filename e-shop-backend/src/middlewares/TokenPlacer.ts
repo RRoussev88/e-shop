@@ -14,7 +14,6 @@ export default () => {
         ctx.request.header.authorization = `Bearer ${token}`
       }
     }
-    await next()
 
     console.log('PRODUCTION_URL: ', process.env.PRODUCTION_URL)
     console.log(
@@ -22,13 +21,16 @@ export default () => {
       process.env.NODE_ENV === 'production' &&
         process.env.PRODUCTION_URL?.startsWith('https')
     )
+
+    await next()
     const cookieOptions = {
       httpOnly: true,
       sameSite: 'lax',
       path: '/',
-      secure:
-        process.env.NODE_ENV === 'production' &&
-        process.env.PRODUCTION_URL?.startsWith('https'),
+      secure: false,
+      // secure:
+      //   process.env.NODE_ENV === 'production' &&
+      //   process.env.PRODUCTION_URL?.startsWith('https'),
       maxAge: 1000 * 60 * 60 * 24 * 30, // 30 Day Age
       domain:
         process.env.NODE_ENV === 'development'
