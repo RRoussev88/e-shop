@@ -25,6 +25,7 @@ const Home: NextPage<HomeProps> = ({ products }) => (
             <div className={styles.product__Row}>
               <div className={styles.product__ColImg}>
                 <Image
+                  loader={() => fromImgToUrl(product.attributes.image)}
                   src={fromImgToUrl(product.attributes.image)}
                   alt={product.attributes.meta_title}
                   width={50}

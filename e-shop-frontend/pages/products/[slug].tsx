@@ -24,6 +24,7 @@ const ProductDetails: NextPage<ProductDetailsProps> = ({ product }) => (
     </Head>
     <h3>{product.attributes.name}</h3>
     <Image
+      loader={() => fromImgToUrl(product.attributes.image)}
       src={fromImgToUrl(product.attributes.image)}
       alt={product.attributes.meta_title}
       width={250}
