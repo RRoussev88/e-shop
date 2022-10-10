@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const cookies_1 = require("../utils/cookies");
 exports.default = () => {
     return async (ctx, next) => {
-        var _a, _b;
+        var _a, _b, _c;
         const cookies = ctx.request.header.cookie || false;
         if (cookies) {
             const token = (_b = (_a = cookies
@@ -18,7 +18,8 @@ exports.default = () => {
             httpOnly: true,
             sameSite: 'lax',
             path: '/',
-            secure: process.env.NODE_ENV === 'production',
+            secure: process.env.NODE_ENV === 'production' &&
+                ((_c = process.env.PRODUCTION_URL) === null || _c === void 0 ? void 0 : _c.startsWith('https')),
             maxAge: 1000 * 60 * 60 * 24 * 30,
             domain: process.env.NODE_ENV === 'development'
                 ? 'localhost'

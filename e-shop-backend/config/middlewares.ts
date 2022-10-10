@@ -1,5 +1,4 @@
 export default ({ env }) => {
-  console.log('env:')
   const imgAndMediaDirectives = [
     "'self'",
     'data:',

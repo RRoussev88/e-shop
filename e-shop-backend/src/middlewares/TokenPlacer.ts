@@ -2,7 +2,6 @@ import { cookieNames } from '../utils/cookies'
 
 export default () => {
   return async (ctx, next) => {
-    ctx.log.debug('that works?')
     const cookies = ctx.request.header.cookie || false
     if (cookies) {
       const token = cookies
@@ -15,18 +14,15 @@ export default () => {
         ctx.request.header.authorization = `Bearer ${token}`
       }
     }
-
-    console.log('PRODUCTION_URL: ', process.env.PRODUCTION_URL)
-
     await next()
+
     const cookieOptions = {
       httpOnly: true,
       sameSite: 'lax',
       path: '/',
-      secure: false,
-      // secure:
-      //   process.env.NODE_ENV === 'production' &&
-      //   process.env.PRODUCTION_URL?.startsWith('https'),
+      secure:
+        process.env.NODE_ENV === 'production' &&
+        process.env.PRODUCTION_URL?.startsWith('https'),
       maxAge: 1000 * 60 * 60 * 24 * 30, // 30 Day Age
       domain:
         process.env.NODE_ENV === 'development'
