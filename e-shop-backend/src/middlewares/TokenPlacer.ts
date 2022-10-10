@@ -20,7 +20,9 @@ export default () => {
       httpOnly: true,
       sameSite: 'lax',
       path: '/',
-      secure: process.env.NODE_ENV === 'production',
+      secure:
+        process.env.NODE_ENV === 'production' &&
+        process.env.PRODUCTION_URL?.startsWith('https'),
       maxAge: 1000 * 60 * 60 * 24 * 30, // 30 Day Age
       domain:
         process.env.NODE_ENV === 'development'

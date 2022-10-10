@@ -6,7 +6,7 @@ import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 import { toDecimals } from '../utils/format'
 import { API_URL, fromImgToUrl } from '../utils/urls'
-import { ApiResponse, Product } from './api/types'
+import { ApiResponse, Product } from '../utils/types'
 
 type HomeProps = { products: Product[] }
 

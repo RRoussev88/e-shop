@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from 'react'
 
 import { toDecimals } from '../../utils/format'
 import { API_URL } from '../../utils/urls'
-import { ApiResponse, Order, User } from '../api/types'
+import { ApiResponse, Order, User } from '../../utils/types'
 import AuthContext from '../../context/AuthContext'
 
 const useOrders = (user: User | null) => {

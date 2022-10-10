@@ -9,7 +9,7 @@ import {
 import { useRouter } from 'next/router'
 import { isUser } from '../utils/format'
 import { API_URL, cookieNames } from '../utils/urls'
-import { AuthResponse, User } from '../pages/api/types'
+import { AuthResponse, User } from '../utils/types'
 
 type AuthContextValue = {
   user: User | null
@@ -38,7 +38,7 @@ const AuthContext = createContext<AuthContextValue>({
 })
 
 const cookieOptions = {
-  secure: process.env.NODE_ENV === 'production',
+  secure: process.env.NODE_ENV === 'production' && API_URL.startsWith('https'),
   sameSite: 'lax',
   path: '/',
   maxAge: 60 * 60 * 24 * 30, // 30 days

@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 import { toDecimals } from '../../utils/format'
 import { fromImgToUrl, API_URL } from '../../utils/urls'
-import { ApiResponse, Product } from '../api/types'
+import { ApiResponse, Product } from '../../utils/types'
 import BuyButton from '../../components/BuyButton'
 
 type ProductDetailsProps = { product: Product }

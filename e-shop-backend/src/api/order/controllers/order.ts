@@ -4,7 +4,6 @@
 
 import { factories } from '@strapi/strapi'
 import StripePromise from 'stripe'
-import { sanitize } from '@strapi/utils'
 
 import errors from '../../../utils/errors'
 import { StripeAPIResponse } from '../../../utils/types'

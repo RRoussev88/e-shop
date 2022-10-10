@@ -4,7 +4,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import styles from '../styles/BuyButton.module.css'
 import AuthContext from '../context/AuthContext'
 import { API_URL, STRIPE_PK } from '../utils/urls'
-import { Product } from '../pages/api/types'
+import { Product } from '../utils/types'
 
 const stripePromise = loadStripe(STRIPE_PK)
 

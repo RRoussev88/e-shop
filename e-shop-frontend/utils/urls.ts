@@ -1,4 +1,4 @@
-import { Image } from '../pages/api/types'
+import { Image } from './types'
 
 export const API_URL =
   process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337'

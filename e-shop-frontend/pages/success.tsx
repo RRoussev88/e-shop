@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
-import { ApiResponse, Order } from './api/types'
+import { ApiResponse, Order } from '../utils/types'
 import { API_URL } from '../utils/urls'
 
 const useOrder = (sessionId: string) => {
