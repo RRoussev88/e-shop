@@ -2,6 +2,7 @@ import { cookieNames } from '../utils/cookies'
 
 export default () => {
   return async (ctx, next) => {
+    ctx.log.debug('that works?')
     const cookies = ctx.request.header.cookie || false
     if (cookies) {
       const token = cookies
