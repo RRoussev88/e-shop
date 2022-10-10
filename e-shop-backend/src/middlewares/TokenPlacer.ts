@@ -16,6 +16,12 @@ export default () => {
     }
     await next()
 
+    console.log('PRODUCTION_URL: ', process.env.PRODUCTION_URL)
+    console.log(
+      'secure: ',
+      process.env.NODE_ENV === 'production' &&
+        process.env.PRODUCTION_URL?.startsWith('https')
+    )
     const cookieOptions = {
       httpOnly: true,
       sameSite: 'lax',
@@ -29,8 +35,6 @@ export default () => {
           ? 'localhost'
           : process.env.PRODUCTION_URL,
     }
-    console.log('cookie options: ', cookieOptions)
-    console.log('PRODUCTION_URL: ', process.env.PRODUCTION_URL)
 
     // For login and register paths
     if (
