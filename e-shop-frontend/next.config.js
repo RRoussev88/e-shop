@@ -8,6 +8,7 @@ const nextConfig = {
       'e-shop-kunz-rroussev88.vercel.app',
       'e-shop-kunz-git-master-rroussev88.vercel.app',
       'e-shop-kunz.vercel.app',
+      'https://e-shop-images.s3.eu-central-1.amazonaws.com',
     ],
   },
 }
