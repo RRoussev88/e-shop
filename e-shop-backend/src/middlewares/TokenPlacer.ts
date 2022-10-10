@@ -16,11 +16,6 @@ export default () => {
     }
 
     console.log('PRODUCTION_URL: ', process.env.PRODUCTION_URL)
-    console.log(
-      'secure: ',
-      process.env.NODE_ENV === 'production' &&
-        process.env.PRODUCTION_URL?.startsWith('https')
-    )
 
     await next()
     const cookieOptions = {
