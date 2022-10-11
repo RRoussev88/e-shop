@@ -5,6 +5,7 @@ exports.default = ({ env }) => {
         "'self'",
         'data:',
         'blob:',
+        'dl.airtable.com',
         `http://${env('AWS_BUCKET_NAME')}.s3.${env('AWS_REGION')}.amazonaws.com`,
     ];
     return [
@@ -15,7 +16,7 @@ exports.default = ({ env }) => {
                 contentSecurityPolicy: {
                     useDefaults: true,
                     directives: {
-                        'connect-src': ["'self'", 'https:'],
+                        'connect-src': ["'self'", 'http:', 'https:'],
                         'img-src': imgAndMediaDirectives,
                         'media-src': imgAndMediaDirectives,
                         upgradeInsecureRequests: null,
