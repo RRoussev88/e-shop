@@ -73,6 +73,8 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   }
 
   const loginUser = async (email: string, password: string) => {
+    console.log('NEXT_PUBLIC_API_URL: ', process.env.NEXT_PUBLIC_API_URL)
+    console.log('API_URL: ', API_URL)
     executeRequest(
       fetch(`${API_URL}/api/auth/local`, {
         method: 'POST',
