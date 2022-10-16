@@ -22,9 +22,9 @@ const Header: FC = () => {
     <header className={styles.nav}>
       {!isHome && (
         <div className={styles.back}>
-          <a href="#" onClick={goBack}>
-            &lt;&nbsp;Back
-          </a>
+          <Link href="#">
+            <a onClick={goBack}>&lt;&nbsp;Back</a>
+          </Link>
         </div>
       )}
       <div className={styles.title}>
