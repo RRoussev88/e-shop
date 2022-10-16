@@ -14,6 +14,7 @@ const Login: NextPage = () => {
     event: FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault()
+    console.log('ENV: ', process.env)
     loginUser(email, password)
   }
 
