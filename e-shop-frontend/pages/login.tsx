@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { FormEvent, FormEventHandler, useContext, useState } from 'react'
 import AuthContext from '../context/AuthContext'
+import { API_URL } from '../utils/urls'
 
 const Login: NextPage = () => {
   const [email, setEmail] = useState<string>('')
@@ -23,6 +24,8 @@ const Login: NextPage = () => {
         <meta name="description" content="Login here to make your purchase" />
       </Head>
       <h2>Login</h2>
+      <p>URL: {API_URL}</p>
+      <p>process: {process.env.NEXT_PUBLIC_API_URL}</p>
       <form onSubmit={handleSubmit}>
         <input
           autoFocus
