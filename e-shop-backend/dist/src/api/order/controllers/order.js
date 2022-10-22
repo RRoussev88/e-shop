@@ -15,6 +15,7 @@ const stripe = new stripe_1.default(process.env.STRIPE_SK, {
 exports.default = strapi_1.factories.createCoreController('api::order.order', ({ strapi }) => ({
     async find(ctx) {
         const { user } = ctx.state;
+        console.log('user :', user);
         if (!user) {
             ctx.status = 401;
             return ctx.send(errors_1.default[401], 401);

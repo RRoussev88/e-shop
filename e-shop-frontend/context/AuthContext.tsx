@@ -53,8 +53,10 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
       const authentication = await promise
       const auth: AuthResponse | User = await authentication.json()
       const newUser: User = isUser(auth) ? auth : auth.user
-      setCookie(cookieNames.userData, newUser, cookieOptions)
-      setUser(newUser)
+      if (!user || newUser.id !== user.id) {
+        setCookie(cookieNames.userData, newUser, cookieOptions)
+        setUser(newUser)
+      }
       router.push('/')
     } catch {
       setUser(null)

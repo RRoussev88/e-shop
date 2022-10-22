@@ -5,6 +5,7 @@ exports.default = () => {
     return async (ctx, next) => {
         var _a, _b, _c;
         const cookies = ctx.request.header.cookie || false;
+        console.log('cookies :', cookies);
         if (cookies) {
             const token = (_b = (_a = cookies
                 .split(';')
