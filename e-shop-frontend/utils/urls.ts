@@ -1,7 +1,7 @@
 import { Image } from './types'
 
 export const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || 'http://0.0.0.0:1337'
+  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:1337'
 
 export const STRIPE_PK =
   process.env.NEXT_PUBLIC_STRPIE_PK ||

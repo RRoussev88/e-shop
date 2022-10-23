@@ -17,7 +17,6 @@ export default factories.createCoreController(
   ({ strapi }) => ({
     async find(ctx) {
       const { user } = ctx.state
-      console.log('user :', user)
       if (!user) {
         ctx.status = 401
         return ctx.send(errors[401], 401)

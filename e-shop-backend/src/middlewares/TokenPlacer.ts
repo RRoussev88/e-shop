@@ -3,7 +3,6 @@ import { cookieNames } from '../utils/cookies'
 export default () => {
   return async (ctx, next) => {
     const cookies = ctx.request.header.cookie || false
-    console.log('cookies :', cookies)
     if (cookies) {
       const token = cookies
         .split(';')
@@ -30,7 +29,7 @@ export default () => {
           ? 'localhost'
           : process.env.PRODUCTION_URL,
     }
-    console.log('PRODUCTION_URL: ', process.env.PRODUCTION_URL)
+
     // For login and register paths
     if (
       [
