@@ -30,7 +30,7 @@ export default () => {
           ? 'localhost'
           : process.env.PRODUCTION_URL,
     }
-
+    console.log('PRODUCTION_URL: ', process.env.PRODUCTION_URL)
     // For login and register paths
     if (
       [
